@@ -28,6 +28,38 @@ body {
   padding: 20px 16px 32px;
 }
 
+.install-banner {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow);
+}
+
+.install-banner[hidden] {
+  display: none;
+}
+
+.install-banner p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.install-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.install-actions .primary {
+  width: auto;
+  padding-inline: 16px;
+}
+
 .top {
   display: flex;
   justify-content: space-between;

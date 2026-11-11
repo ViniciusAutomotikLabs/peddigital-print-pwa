@@ -1,32 +1,35 @@
 # PedDigital Print PWA
 
-Piloto: montar pedido no celular (PWA) e imprimir na **Bematech MP-4200 TH** (ESC/POS), com roteamento **comida → cozinha** e **bebida → bar**.
+PWA no celular (mesma Wi‑Fi da impressora) → imprime na **Bematech MP-4200 TH** (ESC/POS), com roteamento **comida → cozinha** e **bebida → bar**.
 
-## Por que tem um agente local?
+## Tem como? Sim
 
-Navegador/PWA **não abre TCP raw** na porta `9100`.  
-Fluxo real:
+O celular **não** fala ESC/POS direto na porta `9100` (limitação do navegador).  
+Por isso o Mac (ou um mini-PC/Raspberry no salão) roda este app, que:
+
+1. Serve o **PWA** (ícone na tela inicial)
+2. Recebe o pedido do celular
+3. Manda ESC/POS para a Bematech na LAN
 
 ```
-Celular (PWA)  →  HTTP no Mac/agente (mesma Wi‑Fi)  →  ESC/POS 192.168.1.26:9100
+Celular PWA ──HTTPS──► Mac/agente (mesma Wi‑Fi) ──TCP 9100──► Bematech
 ```
 
-O repositório no GitHub guarda o código. Para imprimir de verdade, rode o agente na rede do salão.
+Vercel/nuvem **não** alcança a impressora da casa. Para imprimir de verdade: celular + impressora + agente na **mesma Wi‑Fi**.
 
-## Subir
+## Subir no Mac
 
 ```bash
 npm install
 npm start
 ```
 
-No terminal aparece algo como:
+No terminal:
 
-- Local: `http://127.0.0.1:8787`
-- Rede: `http://SEU_IP_LAN:8787` ← abra no celular (mesma Wi‑Fi)
-
-No PWA: escolha itens → **Enviar e imprimir**.  
-Configurações (⚙): IPs da cozinha e do bar (no teste as duas podem ser a mesma Bematech).
+- `https://SEU_IP:8787` ← abra **no celular**
+- Aceite o aviso de certificado (é local, self-signed)
+- iPhone: Compartilhar → **Adicionar à Tela de Início**
+- Android: menu → **Instalar app** / Adicionar à tela inicial
 
 ## Variáveis
 
@@ -37,11 +40,6 @@ Configurações (⚙): IPs da cozinha e do bar (no teste as duas podem ser a mes
 | `PRINTER_BAR_IP` | mesmo da cozinha |
 | `PRINTER_PORT` | `9100` |
 
-## Limite honesto
+## Repo
 
-- GitHub Pages / HTTPS sozinho **não** imprime na LAN sem o agente.
-- Com 2 impressoras: coloque IPs diferentes em Cozinha e Bar.
-
-## Stack
-
-Node + Express (agente) · HTML/CSS/JS PWA · ESC/POS raw
+https://github.com/ViniciusAutomotikLabs/peddigital-print-pwa

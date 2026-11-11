@@ -192,6 +192,41 @@ document.getElementById("btn-save-settings").addEventListener("click", () => {
   });
 });
 
+let deferredInstall = null;
+const installBanner = document.getElementById("install-banner");
+const btnInstall = document.getElementById("btn-install");
+
+function isStandalone() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  );
+}
+
+if (!isStandalone() && !localStorage.getItem("pd_hide_install")) {
+  installBanner.hidden = false;
+}
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstall = e;
+  btnInstall.hidden = false;
+  installBanner.hidden = false;
+});
+
+btnInstall?.addEventListener("click", async () => {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  await deferredInstall.userChoice;
+  deferredInstall = null;
+  btnInstall.hidden = true;
+});
+
+document.getElementById("btn-dismiss-install")?.addEventListener("click", () => {
+  localStorage.setItem("pd_hide_install", "1");
+  installBanner.hidden = true;
+});
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js").catch(() => {});
 }
@@ -199,3 +234,4 @@ if ("serviceWorker" in navigator) {
 renderMenu();
 renderCart();
 refreshAgentInfo();
+

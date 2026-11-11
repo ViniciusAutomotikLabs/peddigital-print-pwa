@@ -15,9 +15,20 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
+    <div id="install-banner" class="install-banner" hidden>
+      <div>
+        <strong>Instalar PWA</strong>
+        <p>Na mesma Wi‑Fi da impressora. No iPhone: Compartilhar → Adicionar à Tela de Início. No Android: menu → Instalar app.</p>
+      </div>
+      <div class="install-actions">
+        <button type="button" id="btn-install" class="primary" hidden>Instalar</button>
+        <button type="button" id="btn-dismiss-install" class="ghost">Ok</button>
+      </div>
+    </div>
+
     <header class="top">
       <div>
-        <p class="eyebrow">PedDigital · piloto</p>
+        <p class="eyebrow">PedDigital · PWA na Wi‑Fi</p>
         <h1>Pedido → impressora</h1>
       </div>
       <button type="button" id="btn-settings" class="ghost" aria-label="Configurações">⚙</button>
