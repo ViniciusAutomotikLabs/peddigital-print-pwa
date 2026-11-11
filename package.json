@@ -1,0 +1,21 @@
+{
+  "name": "peddigital-print-pwa",
+  "version": "1.0.0",
+  "description": "PWA PedDigital: pedido → ESC/POS na Bematech (cozinha/bar) via agente local",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "keywords": ["peddigital", "escpos", "pwa", "bematech"],
+  "author": "ViniciusYan",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
